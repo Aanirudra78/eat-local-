@@ -47,6 +47,15 @@ body {
   background-color: var(--cream);
   color: var(--text-primary);
   line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* Image fallback styles */
+.item-img-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--cream-2), var(--cream-3));
+  border-radius: 8px;
 }
 
 ::-webkit-scrollbar {
@@ -400,7 +409,7 @@ p {
 }
 
 .filter-pill {
-  padding: 8px 20px;
+  padding: 12px 20px;
   background: var(--cream-2);
   border: 1px solid var(--cream-3);
   border-radius: var(--radius-pill);
@@ -409,6 +418,7 @@ p {
   white-space: nowrap;
   cursor: pointer;
   transition: all 200ms var(--ease);
+  min-height: 44px;
 }
 
 .filter-pill:hover {
@@ -1575,7 +1585,7 @@ p {
   }
 }
 
-/* Order Modal */
+/* Order Modal - Mobile Bottom Sheet */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -1606,6 +1616,19 @@ p {
   transform: translateY(0);
 }
 
+/* Mobile (< 640px) - Bottom Sheet */
+@media (max-width: 640px) {
+  .modal-panel {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    max-height: 92vh;
+    border-radius: 24px 24px 0 0;
+  }
+}
+
+/* Desktop (>= 640px) - Centered Dialog */
 @media (min-width: 640px) {
   .modal-overlay {
     align-items: center;
@@ -1616,6 +1639,7 @@ p {
     transform: scale(0.9);
     opacity: 0;
     transition: all 300ms var(--ease);
+    margin: auto;
   }
 
   .modal-overlay.visible .modal-panel {

@@ -1,5 +1,6 @@
-// Global cart state (shared across pages via localStorage)
-let globalCart = JSON.parse(localStorage.getItem('eatLocalCart')) || {};
+// State
+let activeFilter = 'all';
+let searchQuery = '';
 
 // DOM Elements
 const navbar = document.getElementById('navbar');
@@ -10,164 +11,10 @@ const restaurantGrid = document.getElementById('restaurantGrid');
 const resultCount = document.getElementById('resultCount');
 const emptyState = document.getElementById('emptyState');
 const heroBg = document.getElementById('heroBg');
-const navbarCart = document.getElementById('navbarCart');
-const cartDropdown = document.getElementById('cartDropdown');
-const navCartBadge = document.getElementById('navCartBadge');
-const cartDropdownItems = document.getElementById('cartDropdownItems');
-const cartDropdownFooter = document.getElementById('cartDropdownFooter');
-const dropdownTotal = document.getElementById('dropdownTotal');
-
-// State
-let activeFilter = 'all';
-let searchQuery = '';
-
-// Save cart to localStorage
-function saveCart() {
-  localStorage.setItem('eatLocalCart', JSON.stringify(globalCart));
-}
-
-// Get total items and price
-function getCartTotal() {
-  const items = Object.values(globalCart);
-  const totalItems = items.reduce((sum, qty) => sum + qty, 0);
-  const totalPrice = items.reduce((sum, [price, qty]) => sum + (price * qty), 0);
-  return { totalItems, totalPrice };
-}
-
-// Update navbar cart badge
-function updateNavbarCart() {
-  const { totalItems } = getCartTotal();
-  if (totalItems > 0) {
-    navCartBadge.style.display = 'flex';
-    navCartBadge.textContent = totalItems;
-    navbarCart.classList.remove('empty');
-  } else {
-    navCartBadge.style.display = 'none';
-    navbarCart.classList.add('empty');
-  }
-}
-
-// Update cart dropdown
-function updateCartDropdown() {
-  const items = Object.entries(globalCart);
-  
-  if (items.length === 0) {
-    cartDropdownItems.innerHTML = '<div class="cart-empty-msg">Your cart is empty</div>';
-    cartDropdownFooter.style.display = 'none';
-    return;
-  }
-
-  let itemsHtml = '';
-  let total = 0;
-  let currentRestaurantId = null;
-
-  items.forEach(([itemId, [name, price, qty, restaurantId]]) => {
-    currentRestaurantId = restaurantId;
-    total += price * qty;
-    itemsHtml += `
-      <div class="cart-dropdown-item">
-        <div class="cart-item-info">
-          <div class="cart-item-name">${name}</div>
-          <div class="cart-item-price">₹${price} × ${qty}</div>
-        </div>
-        <div class="cart-item-qty" onclick="event.stopPropagation()">
-          <button class="cart-qty-btn minus" data-id="${itemId}" data-delta="-1">−</button>
-          <span class="cart-qty-count">${qty}</span>
-          <button class="cart-qty-btn plus" data-id="${itemId}" data-delta="1">+</button>
-        </div>
-        <div class="cart-item-total">₹${price * qty}</div>
-      </div>
-    `;
-  });
-
-  // Get restaurant name
-  const restaurant = restaurants.find(r => r.id === currentRestaurantId);
-  const restaurantName = restaurant ? restaurant.name : '';
-
-  cartDropdownItems.innerHTML = `
-    <div class="cart-header-row">
-      <div class="cart-restaurant-info">📍 ${restaurantName}</div>
-      <button class="clear-cart-btn" id="clearCartBtn">Clear</button>
-    </div>
-    ${itemsHtml}
-  `;
-  
-  // Add event listener for clear button
-  document.getElementById('clearCartBtn').addEventListener('click', (e) => {
-    e.stopPropagation();
-    window.clearCart();
-  });
-  dropdownTotal.textContent = `₹${total}`;
-  cartDropdownFooter.style.display = 'block';
-}
-
-// Update cart item quantity from dropdown
-window.updateCartItem = function(itemId, delta) {
-  if (globalCart[itemId]) {
-    globalCart[itemId][2] += delta;
-    if (globalCart[itemId][2] <= 0) {
-      delete globalCart[itemId];
-    }
-    saveCart();
-    updateNavbarCart();
-    updateCartDropdown();
-    // Also update restaurant page if open
-    if (typeof renderCart === 'function' && document.getElementById('stickyCart')) {
-      renderCart();
-    }
-    if (typeof renderMenu === 'function') {
-      renderMenu();
-    }
-  }
-};
-
-// Clear entire cart
-window.clearCart = function() {
-  globalCart = {};
-  saveCart();
-  updateNavbarCart();
-  updateCartDropdown();
-  // Also clear restaurant page cart
-  if (typeof renderCart === 'function') {
-    renderCart();
-  }
-  if (typeof renderMenu === 'function') {
-    renderMenu();
-  }
-};
-
-// Toggle cart dropdown
-navbarCart.addEventListener('click', (e) => {
-  e.stopPropagation();
-  cartDropdown.classList.toggle('visible');
-});
-
-// Cart item buttons event delegation
-cartDropdownItems.addEventListener('click', (e) => {
-  const btn = e.target.closest('.cart-qty-btn');
-  if (btn) {
-    const itemId = btn.dataset.id;
-    const delta = parseInt(btn.dataset.delta);
-    window.updateCartItem(itemId, delta);
-  }
-});
-
-// Close dropdown when clicking outside
-document.addEventListener('click', () => {
-  cartDropdown.classList.remove('visible');
-});
-
-// Go to checkout (first restaurant with items)
-function goToCheckout() {
-  const items = Object.entries(globalCart);
-  if (items.length > 0) {
-    const restaurantId = items[0][1][3];
-    window.location.href = `restaurant.html?id=${restaurantId}`;
-  }
-}
 
 // Navbar scroll effect
 window.addEventListener('scroll', () => {
+  const navbar = document.getElementById('navbar');
   if (window.scrollY > 80) {
     navbar.classList.add('scrolled');
   } else {
@@ -223,37 +70,35 @@ function createRestaurantCard(restaurant, index) {
   return card;
 }
 
-// Filter restaurants based on search and active filter
-function getFilteredRestaurants() {
-  return restaurants.filter(restaurant => {
-    const searchLower = searchQuery.toLowerCase();
-    const matchesSearch = !searchQuery ||
-      restaurant.name.toLowerCase().includes(searchLower) ||
-      restaurant.cuisine.toLowerCase().includes(searchLower) ||
-      restaurant.area.toLowerCase().includes(searchLower) ||
-      restaurant.tagline.toLowerCase().includes(searchLower);
+// Filter and render restaurants
+function filterAndRender() {
+  let filtered = restaurants;
 
-    let matchesFilter = true;
-    if (activeFilter === 'open') {
-      matchesFilter = restaurant.isOpen;
-    } else if (activeFilter !== 'all') {
-      matchesFilter = restaurant.filterTags.includes(activeFilter);
-    }
+  // Apply search
+  if (searchQuery.trim()) {
+    const q = searchQuery.toLowerCase();
+    filtered = filtered.filter(r =>
+      r.name.toLowerCase().includes(q) ||
+      r.cuisine.toLowerCase().includes(q) ||
+      r.area.toLowerCase().includes(q) ||
+      (r.tagline && r.tagline.toLowerCase().includes(q))
+    );
+  }
 
-    return matchesSearch && matchesFilter;
-  });
-}
+  // Apply filter pill
+  if (activeFilter === 'open') {
+    filtered = filtered.filter(r => r.isOpen);
+  } else if (activeFilter !== 'all') {
+    filtered = filtered.filter(r =>
+      r.filterTags && r.filterTags.includes(activeFilter)
+    );
+  }
 
-// Render all restaurant cards
-function renderRestaurants() {
-  const filtered = getFilteredRestaurants();
+  // Render
   restaurantGrid.innerHTML = '';
 
-  if (searchQuery || activeFilter !== 'all') {
-    resultCount.textContent = `Showing ${filtered.length} restaurant${filtered.length !== 1 ? 's' : ''} in Jabalpur`;
-  } else {
-    resultCount.textContent = `Showing ${filtered.length} restaurant${filtered.length !== 1 ? 's' : ''} in Jabalpur`;
-  }
+  // Update result count
+  resultCount.textContent = `Showing ${filtered.length} restaurant${filtered.length !== 1 ? 's' : ''} in Jabalpur`;
 
   if (filtered.length === 0) {
     emptyState.style.display = 'block';
@@ -273,26 +118,24 @@ function renderRestaurants() {
   }
 }
 
-// Search input event
+// Search input listener
 searchInput.addEventListener('input', (e) => {
   searchQuery = e.target.value;
-  renderRestaurants();
+  filterAndRender();
 });
 
 searchBtn.addEventListener('click', () => {
   searchQuery = searchInput.value;
-  renderRestaurants();
+  filterAndRender();
 });
 
-// Filter pills click event
+// Filter pill listeners
 filterBar.addEventListener('click', (e) => {
   if (e.target.classList.contains('filter-pill')) {
-    document.querySelectorAll('.filter-pill').forEach(pill => {
-      pill.classList.remove('active');
-    });
+    document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
     e.target.classList.add('active');
     activeFilter = e.target.dataset.filter;
-    renderRestaurants();
+    filterAndRender();
   }
 });
 
@@ -305,49 +148,8 @@ function setHeroBackground() {
   }
 }
 
-// Listen for cart changes from other tabs/pages
-window.addEventListener('storage', (e) => {
-  if (e.key === 'eatLocalCart') {
-    globalCart = JSON.parse(e.newValue) || {};
-    updateNavbarCart();
-    updateCartDropdown();
-  }
-});
-
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
   setHeroBackground();
-  updateNavbarCart();
-  updateCartDropdown();
-  renderRestaurants();
+  filterAndRender();
 });
-
-// Make functions available globally
-window.addToGlobalCart = function(itemId, name, price, restaurantId) {
-  if (globalCart[itemId]) {
-    globalCart[itemId][2] += 1;
-  } else {
-    globalCart[itemId] = [name, price, 1, restaurantId];
-  }
-  saveCart();
-  updateNavbarCart();
-  updateCartDropdown();
-};
-
-window.removeFromGlobalCart = function(itemId) {
-  delete globalCart[itemId];
-  saveCart();
-  updateNavbarCart();
-  updateCartDropdown();
-};
-
-window.getGlobalCart = function() {
-  return globalCart;
-};
-
-window.clearGlobalCart = function() {
-  globalCart = {};
-  saveCart();
-  updateNavbarCart();
-  updateCartDropdown();
-};

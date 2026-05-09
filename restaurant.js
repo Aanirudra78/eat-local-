@@ -1,3 +1,10 @@
+// Cart state
+let cart = {};
+
+// State
+let currentRestaurant = null;
+let selectedOrderType = 'dine-in';
+
 // DOM Elements
 const backBtn = document.getElementById('backBtn');
 const restaurantCover = document.getElementById('restaurantCover');
@@ -5,15 +12,16 @@ const coverGradient = document.getElementById('coverGradient');
 const coverImage = document.getElementById('coverImage');
 const restaurantName = document.getElementById('restaurantName');
 const restaurantTagline = document.getElementById('restaurantTagline');
-const statusChip = document.getElementById('statusChip');
 const statusBadge = document.getElementById('statusBadge');
 const ratingText = document.getElementById('ratingText');
 const timingText = document.getElementById('timingText');
 const areaText = document.getElementById('areaText');
 const priceText = document.getElementById('priceText');
+const deliveryTimeEl = document.getElementById('deliveryTime');
 const menuTabs = document.getElementById('menuTabs');
 const menuSection = document.getElementById('menuSection');
 const stickyCart = document.getElementById('stickyCart');
+const cartItemName = document.getElementById('cartItemName');
 const cartCount = document.getElementById('cartCount');
 const cartTotal = document.getElementById('cartTotal');
 const placeOrderBtn = document.getElementById('placeOrderBtn');
@@ -32,10 +40,6 @@ const summaryTotal = document.getElementById('summaryTotal');
 const confirmBtn = document.getElementById('confirmBtn');
 const toast = document.getElementById('toast');
 
-// State
-let currentRestaurant = null;
-let selectedOrderType = 'dine-in';
-
 // Get restaurant ID from URL
 function getRestaurantId() {
   const params = new URLSearchParams(window.location.search);
@@ -47,16 +51,6 @@ function findRestaurant(id) {
   return restaurants.find(r => r.id === id);
 }
 
-// Get global cart
-function getGlobalCart() {
-  return JSON.parse(localStorage.getItem('eatLocalCart')) || {};
-}
-
-// Save cart
-function saveGlobalCart(cart) {
-  localStorage.setItem('eatLocalCart', JSON.stringify(cart));
-}
-
 // Initialize restaurant page
 function initRestaurant() {
   const restaurantId = getRestaurantId();
@@ -64,12 +58,11 @@ function initRestaurant() {
 
   if (!currentRestaurant) {
     document.body.innerHTML = `
-      <div class="not-found">
+      <div style="text-align:center; padding:80px 20px;">
+        <p style="font-size:48px">🍽️</p>
         <h2>Restaurant not found</h2>
-        <p>The restaurant you're looking for doesn't exist.</p>
-        <a href="index.html">← Back to Home</a>
-      </div>
-    `;
+        <a href="index.html">← Back to home</a>
+      </div>`;
     return;
   }
 
@@ -80,6 +73,16 @@ function initRestaurant() {
   setupWhatsAppLink();
   renderCart();
 }
+
+// Navbar scroll effect
+window.addEventListener('scroll', () => {
+  const navbar = document.getElementById('navbar');
+  if (window.scrollY > 80) {
+    navbar.classList.add('scrolled');
+  } else {
+    navbar.classList.remove('scrolled');
+  }
+});
 
 // Populate restaurant info
 function populateRestaurantInfo() {
@@ -113,9 +116,10 @@ function populateRestaurantInfo() {
 
   ratingText.innerHTML = `<strong>${currentRestaurant.rating}</strong> (${currentRestaurant.reviews} reviews)`;
   timingText.textContent = currentRestaurant.timing;
-  areaText.innerHTML = `<span class="icon">📍</span>${currentRestaurant.area.replace(', Jabalpur', '').replace(',Jabalpur', '')}`;
+  const areaClean = currentRestaurant.area.replace(', Jabalpur', '').replace(',Jabalpur', '');
+  areaText.innerHTML = `<span class="icon">📍</span>${areaClean}`;
   priceText.innerHTML = `<span class="icon">💰</span>₹${currentRestaurant.priceForTwo} for two`;
-  document.getElementById('deliveryTime').textContent = currentRestaurant.deliveryTime;
+  deliveryTimeEl.textContent = currentRestaurant.deliveryTime;
 }
 
 // Render menu category tabs
@@ -136,6 +140,7 @@ function renderMenuTabs() {
     const tab = document.createElement('button');
     tab.className = 'menu-tab' + (index === 0 ? ' active' : '');
     tab.innerHTML = `<span>${category.category}</span>`;
+    tab.dataset.category = index;
     tab.addEventListener('click', () => {
       const section = document.getElementById(`category-${index}`);
       if (section) {
@@ -177,22 +182,20 @@ function findMenuItem(itemId) {
 
 // Render menu items
 function renderMenu() {
-  const cart = getGlobalCart();
-  
   // Render popular items section
   const allItems = currentRestaurant.menu.flatMap(c => c.items);
-  const popularItems = allItems.filter(item => item.badge === 'Bestseller' || item.badge === 'Must Try' || item.badge === 'Popular');
+  const popularItems = allItems.filter(item => item.badge === 'Bestseller' || item.badge === 'Must Try');
   
   if (popularItems.length > 0) {
     const popularSection = document.createElement('div');
     popularSection.className = 'menu-category';
     popularSection.id = 'popular-section';
-    popularSection.style.animation = 'fadeInUp 0.5s ease';
+    popularSection.dataset.category = 'popular';
     
     let itemsHtml = '';
     popularItems.slice(0, 4).forEach(item => {
-      const inCart = cart[item.id] ? cart[item.id][2] : 0;
-      const imageHtml = item.image ? `<img src="${item.image}" alt="${item.name}">` : '';
+      const inCart = cart[item.id] ? cart[item.id].qty : 0;
+      const imageHtml = item.image ? `<img src="${item.image}" alt="${item.name}">` : '<div class="item-img-placeholder"></div>';
       
       let buttonHtml = '';
       if (inCart > 0) {
@@ -242,15 +245,19 @@ function renderMenu() {
     const section = document.createElement('div');
     section.className = 'menu-category';
     section.id = `category-${categoryIndex}`;
+    section.dataset.category = categoryIndex;
     section.dataset.index = categoryIndex;
 
     section.innerHTML = `
-      <h3 class="category-heading">${category.category}</h3>
+      <div class="category-header">
+        <h3 class="category-heading">${category.category}</h3>
+        <span class="category-item-count">${category.items.length} items</span>
+      </div>
       <div class="category-divider"></div>
     `;
 
     category.items.forEach(item => {
-      const inCart = cart[item.id] ? cart[item.id][2] : 0;
+      const inCart = cart[item.id] ? cart[item.id].qty : 0;
       
       const itemEl = document.createElement('div');
       itemEl.className = 'menu-item';
@@ -258,6 +265,8 @@ function renderMenu() {
       let imageHtml = '';
       if (item.image) {
         imageHtml = `<img src="${item.image}" alt="${item.name}">`;
+      } else {
+        imageHtml = '<div class="item-img-placeholder"></div>';
       }
       
       let buttonHtml = '';
@@ -270,12 +279,7 @@ function renderMenu() {
           </div>
         `;
       } else {
-        buttonHtml = `
-          <button class="add-btn" onclick="addToCart('${item.id}')">
-            <span>Add</span>
-            <span>→</span>
-          </button>
-        `;
+        buttonHtml = `<button class="add-btn" onclick="addToCart('${item.id}')"><span>Add</span><span>→</span></button>`;
       }
       
       itemEl.innerHTML = `
@@ -286,12 +290,12 @@ function renderMenu() {
             ${item.badge ? `<span class="menu-item-badge">${item.badge}</span>` : ''}
           </div>
           <p class="menu-item-description">${item.description}</p>
-          <span class="menu-item-price">₹${item.price}</span>
-          ${buttonHtml}
+          <div class="menu-item-footer">
+            <span class="menu-item-price">${item.price}</span>
+            ${buttonHtml}
+          </div>
         </div>
-        <div class="menu-item-image">
-          ${imageHtml}
-        </div>
+        <div class="menu-item-image">${imageHtml}</div>
       `;
 
       section.appendChild(itemEl);
@@ -306,42 +310,38 @@ window.addToCart = function(itemId) {
   const item = findMenuItem(itemId);
   if (!item) return;
 
-  const cart = getGlobalCart();
-  
   if (cart[itemId]) {
-    cart[itemId][2] += 1;
+    cart[itemId].qty += 1;
   } else {
-    cart[itemId] = [item.name, item.price, 1, currentRestaurant.id];
+    cart[itemId] = { name: item.name, price: item.price, qty: 1 };
   }
   
-  saveGlobalCart(cart);
   renderCart();
   renderMenu();
 };
 
 window.updateQuantity = function(itemId, delta) {
-  const cart = getGlobalCart();
-  
   if (!cart[itemId]) return;
 
-  cart[itemId][2] += delta;
-  if (cart[itemId][2] <= 0) {
+  cart[itemId].qty += delta;
+  if (cart[itemId].qty <= 0) {
     delete cart[itemId];
   }
-  
-  saveGlobalCart(cart);
   renderCart();
   renderMenu();
 };
 
 function renderCart() {
-  const cart = getGlobalCart();
   const items = Object.values(cart);
-  const totalItems = items.reduce((sum, item) => sum + item[2], 0);
-  const totalPrice = items.reduce((sum, item) => sum + (item[1] * item[2]), 0);
+  const totalItems = items.reduce((sum, item) => sum + item.qty, 0);
+  const totalPrice = items.reduce((sum, item) => sum + (item.price * item.qty), 0);
+
+  // Get first item name for display
+  const firstItemName = items.length > 0 ? items[0].name : '';
 
   if (totalItems > 0) {
     stickyCart.classList.add('visible');
+    cartItemName.textContent = firstItemName + (items.length > 1 ? ` +${items.length - 1} more` : '');
     cartCount.textContent = `${totalItems} item${totalItems !== 1 ? 's' : ''}`;
     cartTotal.textContent = `₹${totalPrice}`;
     whatsappFloat.classList.add('with-cart');
@@ -415,6 +415,18 @@ function openOrderModal() {
 
 function closeOrderModal() {
   orderModal.classList.remove('visible');
+  // Clear form
+  custName.value = '';
+  custPhone.value = '';
+  custEmail.value = '';
+  specialRequest.value = '';
+  orderDetail.value = '';
+  document.querySelectorAll('.form-input').forEach(el => {
+    el.classList.remove('error');
+  });
+  document.querySelectorAll('.error-message').forEach(el => {
+    el.classList.remove('visible');
+  });
 }
 
 // Order type selection
@@ -428,67 +440,80 @@ orderTypeCards.forEach(card => {
 });
 
 function updateConditionalFields() {
+  conditionalFields.classList.add('visible');
   switch (selectedOrderType) {
     case 'dine-in':
       orderDetail.placeholder = 'Table Number *';
+      orderDetail.type = 'text';
       break;
     case 'takeaway':
       orderDetail.placeholder = 'Pickup Time *';
+      orderDetail.type = 'time';
       break;
     case 'delivery':
       orderDetail.placeholder = 'Delivery Address *';
+      orderDetail.type = 'text';
       break;
   }
 }
 
 // Render order summary
 function renderOrderSummary() {
-  const cart = getGlobalCart();
-  
-  const itemsHtml = Object.entries(cart).map(([id, [name, price, qty]]) => {
+  const itemsHtml = Object.entries(cart).map(([id, item]) => {
     return `
       <div class="summary-item">
-        <span>${name} × ${qty}</span>
-        <span>₹${price * qty}</span>
+        <span>${item.name} × ${item.qty}</span>
+        <span>₹${item.price * item.qty}</span>
       </div>
     `;
   }).join('');
 
   orderItems.innerHTML = itemsHtml;
 
-  const totalPrice = Object.values(cart).reduce((sum, item) => sum + (item[1] * item[2]), 0);
+  const totalPrice = Object.values(cart).reduce((sum, item) => sum + (item.price * item.qty), 0);
   summaryTotal.textContent = `₹${totalPrice}`;
 }
 
 // Validation
 function validateForm() {
   let isValid = true;
+  let firstError = null;
 
+  // Name
   if (!custName.value.trim()) {
     document.getElementById('nameError').classList.add('visible');
     custName.classList.add('error');
+    if (!firstError) firstError = custName;
     isValid = false;
   } else {
     document.getElementById('nameError').classList.remove('visible');
     custName.classList.remove('error');
   }
 
-  if (!custPhone.value.trim()) {
+  // Phone
+  if (!custPhone.value.trim() || custPhone.value.length < 10) {
     document.getElementById('phoneError').classList.add('visible');
     custPhone.classList.add('error');
+    if (!firstError) firstError = custPhone;
     isValid = false;
   } else {
     document.getElementById('phoneError').classList.remove('visible');
     custPhone.classList.remove('error');
   }
 
+  // Order detail
   if (!orderDetail.value.trim()) {
     document.getElementById('orderDetailError').classList.add('visible');
     orderDetail.classList.add('error');
+    if (!firstError) firstError = orderDetail;
     isValid = false;
   } else {
     document.getElementById('orderDetailError').classList.remove('visible');
     orderDetail.classList.remove('error');
+  }
+
+  if (firstError) {
+    firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 
   return isValid;
@@ -496,18 +521,27 @@ function validateForm() {
 
 // Build WhatsApp message
 function buildWhatsAppMessage() {
-  const cart = getGlobalCart();
-  const totalPrice = Object.values(cart).reduce((sum, item) => sum + (item[1] * item[2]), 0);
+  const totalPrice = Object.values(cart).reduce((sum, item) => sum + (item.price * item.qty), 0);
 
-  const orderItemsText = Object.entries(cart).map(([id, [name, price, qty]]) => {
-    return `• ${name} × ${qty} – ₹${price * qty}`;
+  const orderItemsText = Object.entries(cart).map(([id, item]) => {
+    return `• ${item.name} × ${item.qty} – ₹${item.price * item.qty}`;
   }).join('\n');
 
   let orderTypeLabel = '';
+  let orderDetailLabel = '';
   switch (selectedOrderType) {
-    case 'dine-in': orderTypeLabel = 'Dine In'; break;
-    case 'takeaway': orderTypeLabel = 'Takeaway'; break;
-    case 'delivery': orderTypeLabel = 'Delivery'; break;
+    case 'dine-in': 
+      orderTypeLabel = 'Dine In'; 
+      orderDetailLabel = `🪑 *Table Number:* ${orderDetail.value}`;
+      break;
+    case 'takeaway': 
+      orderTypeLabel = 'Takeaway'; 
+      orderDetailLabel = `⏰ *Pickup Time:* ${orderDetail.value}`;
+      break;
+    case 'delivery': 
+      orderTypeLabel = 'Delivery'; 
+      orderDetailLabel = `📍 *Delivery Address:* ${orderDetail.value}`;
+      break;
   }
 
   const message = `🍽️ *New Order – EatLocal*
@@ -518,12 +552,10 @@ function buildWhatsAppMessage() {
 👤 *Customer Details*
 Name: ${custName.value}
 Phone: ${custPhone.value}
-${custEmail.value ? `Email: ${custEmail.value}` : ''}
+${custEmail.value ? `Email: ${custEmail.value}` : 'Email: Not provided'}
 
 🏷️ *Order Type:* ${orderTypeLabel}
-${selectedOrderType === 'dine-in' ? `🪑 *Table Number:* ${orderDetail.value}` : ''}
-${selectedOrderType === 'takeaway' ? `🕐 *Pickup Time:* ${orderDetail.value}` : ''}
-${selectedOrderType === 'delivery' ? `🏠 *Delivery Address:* ${orderDetail.value}` : ''}
+${orderDetailLabel}
 
 🛒 *Order Items:*
 ${orderItemsText}
@@ -546,10 +578,6 @@ confirmBtn.addEventListener('click', () => {
   const whatsappUrl = `https://wa.me/${currentRestaurant.phone}?text=${message}`;
 
   window.open(whatsappUrl, '_blank');
-  
-  // Clear cart after order
-  localStorage.removeItem('eatLocalCart');
-  
   closeOrderModal();
   showToast();
 });
@@ -564,14 +592,6 @@ function showToast() {
 // Back button
 backBtn.addEventListener('click', () => {
   window.history.back();
-});
-
-// Listen for cart changes from other tabs/pages
-window.addEventListener('storage', (e) => {
-  if (e.key === 'eatLocalCart') {
-    renderCart();
-    renderMenu();
-  }
 });
 
 // Initialize on load

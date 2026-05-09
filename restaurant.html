@@ -79,12 +79,18 @@
   <!-- Sticky Cart Bar -->
   <div class="sticky-cart" id="stickyCart">
     <div class="cart-info">
-      <span class="cart-icon">🛒</span>
+      <div class="cart-icon">🛒</div>
       <div class="cart-details">
-        <span id="cartCount">2 items</span> · <span class="cart-total" id="cartTotal">₹258</span>
+        <div class="cart-item-name" id="cartItemName"></div>
+        <span id="cartCount">0 items</span> · <span class="cart-total" id="cartTotal">₹0</span>
       </div>
     </div>
-    <button class="place-order-btn" id="placeOrderBtn">Place Order</button>
+    <button class="place-order-btn" id="placeOrderBtn">
+      <span>Place Order</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M5 12h14M12 5l7 7-7 7"/>
+      </svg>
+    </button>
   </div>
 
   <!-- WhatsApp Float Button -->
@@ -103,12 +109,12 @@
         <button class="modal-close" id="modalClose">×</button>
       </div>
       <div class="modal-content">
-        <!-- Your Details -->
+        <!-- Customer Details -->
         <div class="form-section">
           <label class="form-label">Your Details</label>
-          <input type="text" class="form-input" id="custName" placeholder="Full Name *" required>
+          <input type="text" class="form-input" id="custName" placeholder="Full Name *">
           <p class="error-message" id="nameError">Name is required</p>
-          <input type="tel" class="form-input" id="custPhone" placeholder="Phone Number *" required style="margin-top: 12px;">
+          <input type="tel" class="form-input" id="custPhone" placeholder="Phone Number *" style="margin-top: 12px;">
           <p class="error-message" id="phoneError">Phone number is required</p>
           <input type="email" class="form-input" id="custEmail" placeholder="Email (optional)" style="margin-top: 12px;">
         </div>
@@ -169,7 +175,7 @@
   </div>
 
   <!-- Toast Notification -->
-  <div class="toast" id="toast">✓ Redirecting to WhatsApp...</div>
+  <div class="toast" id="toast">✓ Opening WhatsApp...</div>
 
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
   <script src="data.js"></script>
