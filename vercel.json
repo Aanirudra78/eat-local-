@@ -13,5 +13,15 @@
         }
       ]
     }
+  ],
+  "routes": [
+    {
+      "src": "/restaurant",
+      "dest": "/restaurant.html"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
   ]
 }
