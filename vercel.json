@@ -20,6 +20,9 @@
       "dest": "/restaurant.html"
     },
     {
+      "handle": "filesystem"
+    },
+    {
       "src": "/(.*)",
       "dest": "/index.html"
     }
