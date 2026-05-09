@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restaurant - EatLocal</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
+</head>
+<body>
+  <!-- Back Button -->
+  <button class="back-btn" id="backBtn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M19 12H5M12 19l-7-7 7-7"/>
+    </svg>
+    Back
+  </button>
+
+  <!-- Restaurant Cover -->
+  <div class="restaurant-cover" id="restaurantCover">
+    <div class="restaurant-cover-gradient" id="coverGradient"></div>
+    <img src="" alt="" id="coverImage" style="display: none;">
+    <div class="restaurant-actions">
+      <button class="action-btn favorite" id="favoriteBtn" title="Add to favorites">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+      </button>
+      <button class="action-btn share" id="shareBtn" title="Share">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8M16 6l-4-4-4 4M12 2v13"/>
+        </svg>
+      </button>
+    </div>
+    <div class="restaurant-cover-overlay">
+      <h1 class="restaurant-cover-name" id="restaurantName"></h1>
+      <p class="restaurant-cover-tagline" id="restaurantTagline"></p>
+      <div class="restaurant-cover-meta"></div>
+    </div>
+  </div>
+
+  <!-- Info Bar -->
+  <div class="info-bar">
+    <div class="info-chip" id="statusChip">
+      <span class="status-badge open" id="statusBadge">● Open</span>
+    </div>
+    <div class="info-chip">
+      <span class="icon">⭐</span>
+      <span id="ratingText"></span>
+    </div>
+    <div class="info-chip">
+      <span class="icon">🕐</span>
+      <span id="timingText"></span>
+    </div>
+    <div class="info-chip">
+      <span class="icon">📍</span>
+      <span id="areaText"></span>
+    </div>
+    <div class="info-chip">
+      <span class="icon">💰</span>
+      <span id="priceText"></span>
+    </div>
+    <div class="info-chip">
+      <span class="icon">🚚</span>
+      <span id="deliveryTime"></span>
+    </div>
+    <div class="info-chip call-btn" id="callBtn">
+      <span class="icon">📞</span>
+      <span>Call</span>
+    </div>
+  </div>
+
+  <!-- Menu Category Tabs -->
+  <div class="menu-tabs" id="menuTabs"></div>
+
+  <!-- Menu Section -->
+  <main class="menu-section" id="menuSection"></main>
+
+  <!-- Sticky Cart Bar -->
+  <div class="sticky-cart" id="stickyCart">
+    <div class="cart-info">
+      <span class="cart-icon">🛒</span>
+      <div class="cart-details">
+        <span id="cartCount">2 items</span> · <span class="cart-total" id="cartTotal">₹258</span>
+      </div>
+    </div>
+    <button class="place-order-btn" id="placeOrderBtn">Place Order</button>
+  </div>
+
+  <!-- WhatsApp Float Button -->
+  <a class="whatsapp-float" id="whatsappFloat" href="#" target="_blank">
+    <svg viewBox="0 0 24 24">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+
+  <!-- Order Modal -->
+  <div class="modal-overlay" id="orderModal">
+    <div class="modal-panel">
+      <div class="modal-handle"></div>
+      <div class="modal-header">
+        <h2 class="modal-title">Place Your Order</h2>
+        <button class="modal-close" id="modalClose">×</button>
+      </div>
+      <div class="modal-content">
+        <!-- Your Details -->
+        <div class="form-section">
+          <label class="form-label">Your Details</label>
+          <input type="text" class="form-input" id="custName" placeholder="Full Name *" required>
+          <p class="error-message" id="nameError">Name is required</p>
+          <input type="tel" class="form-input" id="custPhone" placeholder="Phone Number *" required style="margin-top: 12px;">
+          <p class="error-message" id="phoneError">Phone number is required</p>
+          <input type="email" class="form-input" id="custEmail" placeholder="Email (optional)" style="margin-top: 12px;">
+        </div>
+
+        <!-- Order Type -->
+        <div class="form-section">
+          <label class="form-label">Order Type</label>
+          <div class="order-type-cards">
+            <div class="order-type-card selected" data-type="dine-in">
+              <span class="order-type-emoji">🍽</span>
+              <span class="order-type-label">Dine In</span>
+            </div>
+            <div class="order-type-card" data-type="takeaway">
+              <span class="order-type-emoji">🛍</span>
+              <span class="order-type-label">Takeaway</span>
+            </div>
+            <div class="order-type-card" data-type="delivery">
+              <span class="order-type-emoji">🛵</span>
+              <span class="order-type-label">Delivery</span>
+            </div>
+          </div>
+          <div class="conditional-fields" id="conditionalFields">
+            <input type="text" class="form-input" id="orderDetail" placeholder="Table Number *">
+            <p class="error-message" id="orderDetailError">This field is required</p>
+          </div>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="form-section">
+          <label class="form-label">Order Summary</label>
+          <div class="order-summary">
+            <h4>Order Summary</h4>
+            <div id="orderItems"></div>
+            <div class="summary-divider"></div>
+            <div class="summary-item summary-total">
+              <span>Subtotal</span>
+              <span id="summaryTotal">₹0</span>
+            </div>
+            <p class="summary-note">* Delivery charges as per restaurant</p>
+          </div>
+        </div>
+
+        <!-- Special Request -->
+        <div class="form-section">
+          <label class="form-label">Special Request (optional)</label>
+          <textarea class="form-input" id="specialRequest" rows="3" placeholder="Any special instructions..."></textarea>
+        </div>
+
+        <!-- Confirm Button -->
+        <button class="confirm-btn" id="confirmBtn">
+          <svg viewBox="0 0 24 24">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+          ✓ Confirm & Order on WhatsApp
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast">✓ Redirecting to WhatsApp...</div>
+
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script src="data.js"></script>
+  <script src="restaurant.js"></script>
+  <script>
+    AOS.init({ duration: 600, once: true, offset: 60 });
+  </script>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EatLocal - Direct Food Ordering in Jabalpur</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar" id="navbar">
+    <div class="logo">Eat<span>Local</span></div>
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <div class="location">
+        <span>📍</span>
+        <span>Jabalpur</span>
+      </div>
+      <div class="navbar-cart-container">
+        <div class="navbar-cart" id="navbarCart">
+          <span>🛒</span>
+          <span class="cart-text">Cart</span>
+          <span class="cart-badge" id="navCartBadge" style="display: none;">0</span>
+        </div>
+        <div class="cart-dropdown" id="cartDropdown">
+          <div class="cart-dropdown-header">Your Cart</div>
+          <div class="cart-dropdown-items" id="cartDropdownItems"></div>
+          <div class="cart-dropdown-footer" id="cartDropdownFooter" style="display: none;">
+            <div class="cart-dropdown-total">
+              <span>Total</span>
+              <span id="dropdownTotal">₹0</span>
+            </div>
+            <button class="cart-dropdown-btn" onclick="goToCheckout()">View Cart & Checkout</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero" id="heroSection">
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-divider"></div>
+      <h1>"Order food directly from Jabalpur's finest."</h1>
+      <p class="hero-subtext">No Swiggy commission. No Zomato markup. Real prices, direct to restaurant.</p>
+      <div class="hero-pills">
+        <span class="hero-pill">✦ Zero Commission</span>
+        <span class="hero-pill">✦ WhatsApp Ordering</span>
+        <span class="hero-pill">✦ Local Restaurants</span>
+      </div>
+      <div class="search-container">
+        <div class="search-bar">
+          <input type="text" class="search-input" id="searchInput" placeholder="Search restaurant, cuisine, or area...">
+          <button class="search-btn" id="searchBtn">Search</button>
+        </div>
+      </div>
+    </div>
+    <svg class="hero-wave" viewBox="0 0 1440 60" preserveAspectRatio="none">
+      <path fill="#FAF6F0" d="M0,30 C360,60 720,0 1080,30 C1260,45 1380,30 1440,30 L1440,60 L0,60 Z"></path>
+    </svg>
+  </section>
+
+  <!-- Filter Bar -->
+  <div class="filter-bar" id="filterBar">
+    <button class="filter-pill active" data-filter="all">All</button>
+    <button class="filter-pill" data-filter="open">Open Now</button>
+    <button class="filter-pill" data-filter="cafe">Cafe</button>
+    <button class="filter-pill" data-filter="north-indian">North Indian</button>
+    <button class="filter-pill" data-filter="south-indian">South Indian</button>
+    <button class="filter-pill" data-filter="chinese">Chinese</button>
+    <button class="filter-pill" data-filter="italian">Italian</button>
+    <button class="filter-pill" data-filter="mughlai">Mughlai</button>
+  </div>
+
+  <!-- Restaurant Section -->
+  <main class="container">
+    <div class="section-heading">
+      <h2>Restaurants near you</h2>
+      <p id="resultCount">Showing all restaurants in Jabalpur</p>
+    </div>
+    <div class="restaurant-grid" id="restaurantGrid"></div>
+    <div class="empty-state" id="emptyState" style="display: none;">
+      <div class="empty-state-emoji">🍽</div>
+      <h3>No restaurants found</h3>
+      <p>Try searching for 'cafe' or 'North Indian'</p>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-divider"></div>
+    <div class="footer-logo">Eat<span>Local</span> · Jabalpur</div>
+    <p class="footer-tagline">Order direct. Support local.</p>
+  </footer>
+
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+  <script>
+    AOS.init({ duration: 600, once: true, offset: 60 });
+  </script>
+</body>
+</html>
