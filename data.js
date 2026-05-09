@@ -20,26 +20,26 @@ const restaurants = [
       {
         category: "Coffee & Beverages",
         items: [
-          { id: "ub1", name: "Cold Coffee", price: 129, description: "Rich cold brew blended with fresh cream and a hint of vanilla. Served chilled.", veg: true, image: "", badge: "Bestseller" },
-          { id: "ub2", name: "Masala Chai", price: 49, description: "Aromatic ginger-cardamom chai brewed strong.", veg: true, image: "" },
-          { id: "ub3", name: "Mango Smoothie", price: 149, description: "Fresh Alphonso mango blended with yogurt and honey.", veg: true, image: "", badge: "Seasonal" },
-          { id: "ub7", name: "Espresso", price: 79, description: "Strong and bold single shot espresso.", veg: true, image: "" },
-          { id: "ub8", name: "Cappuccino", price: 119, description: "Creamy cappuccino with foam art.", veg: true, image: "" }
+          { id: "ub1", name: "Cold Coffee", price: 129, description: "Rich cold brew blended with fresh cream and a hint of vanilla. Served chilled.", veg: true, image: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=200&q=80", badge: "Bestseller" },
+          { id: "ub2", name: "Masala Chai", price: 49, description: "Aromatic ginger-cardamom chai brewed strong.", veg: true, image: "https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?w=200&q=80", badge: "" },
+          { id: "ub3", name: "Mango Smoothie", price: 149, description: "Fresh Alphonso mango blended with yogurt and honey.", veg: true, image: "https://images.unsplash.com/photo-1623065422902-30a2d299bbe4?w=200&q=80", badge: "Seasonal" },
+          { id: "ub7", name: "Espresso", price: 79, description: "Strong and bold single shot espresso.", veg: true, image: "https://images.unsplash.com/photo-1510707577719-ae7c14805e3a?w=200&q=80", badge: "" },
+          { id: "ub8", name: "Cappuccino", price: 119, description: "Creamy cappuccino with foam art.", veg: true, image: "https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=200&q=80", badge: "" }
         ]
       },
       {
         category: "Snacks & Bites",
         items: [
-          { id: "ub4", name: "Paneer Grilled Sandwich", price: 129, description: "Herbed paneer with capsicum, onion, and cheese. Toasted golden.", veg: true, image: "", badge: "Bestseller" },
-          { id: "ub5", name: "Chicken Club Sandwich", price: 179, description: "Grilled chicken breast, lettuce, tomato, mayo. Double-decker.", veg: false, image: "" },
-          { id: "ub9", name: "French Fries", price: 99, description: "Crispy golden fries with seasoning.", veg: true, image: "" }
+          { id: "ub4", name: "Paneer Grilled Sandwich", price: 129, description: "Herbed paneer with capsicum, onion, and cheese. Toasted golden.", veg: true, image: "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=200&q=80", badge: "Bestseller" },
+          { id: "ub5", name: "Chicken Club Sandwich", price: 179, description: "Grilled chicken breast, lettuce, tomato, mayo. Double-decker.", veg: false, image: "https://images.unsplash.com/photo-1528736235302-52922df5c122?w=200&q=80", badge: "" },
+          { id: "ub9", name: "French Fries", price: 99, description: "Crispy golden fries with seasoning.", veg: true, image: "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=200&q=80", badge: "" }
         ]
       },
       {
         category: "Desserts",
         items: [
-          { id: "ub6", name: "Brownie with Ice Cream", price: 159, description: "Warm dark chocolate brownie topped with vanilla ice cream.", veg: true, image: "", badge: "Must Try" },
-          { id: "ub10", name: "Cheesecake", price: 189, description: "Creamy New York style cheesecake.", veg: true, image: "" }
+          { id: "ub6", name: "Brownie with Ice Cream", price: 159, description: "Warm dark chocolate brownie topped with vanilla ice cream.", veg: true, image: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=200&q=80", badge: "Must Try" },
+          { id: "ub10", name: "Cheesecake", price: 189, description: "Creamy New York style cheesecake.", veg: true, image: "https://images.unsplash.com/photo-1533134242443-d4fd215305ad?w=200&q=80", badge: "" }
         ]
       }
     ]
@@ -65,26 +65,26 @@ const restaurants = [
       {
         category: "North Indian",
         items: [
-          { id: "sf1", name: "Paneer Butter Masala", price: 180, description: "Creamy tomato-based gravy with soft paneer cubes.", veg: true, image: "", badge: "Bestseller" },
-          { id: "sf2", name: "Dal Makhani", price: 140, description: "Slow-cooked black dal with butter and cream.", veg: true, image: "" },
-          { id: "sf3", name: "Chicken Curry", price: 220, description: "Homestyle spiced chicken in robust onion-tomato gravy.", veg: false, image: "" },
-          { id: "sf8", name: "Dal Tadka", price: 120, description: "Yellow dal tempered with garlic and spices.", veg: true, image: "" }
+          { id: "sf1", name: "Paneer Butter Masala", price: 180, description: "Creamy tomato-based gravy with soft paneer cubes.", veg: true, image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=200&q=80", badge: "Bestseller" },
+          { id: "sf2", name: "Dal Makhani", price: 140, description: "Slow-cooked black dal with butter and cream.", veg: true, image: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=200&q=80", badge: "" },
+          { id: "sf3", name: "Chicken Curry", price: 220, description: "Homestyle spiced chicken in robust onion-tomato gravy.", veg: false, image: "https://images.unsplash.com/photo-1603894584373-5ac82b241413?w=200&q=80", badge: "" },
+          { id: "sf8", name: "Dal Tadka", price: 120, description: "Yellow dal tempered with garlic and spices.", veg: true, image: "https://images.unsplash.com/photo-1516714819001-8ee7a13b71be?w=200&q=80", badge: "" }
         ]
       },
       {
         category: "Chinese",
         items: [
-          { id: "sf4", name: "Veg Hakka Noodles", price: 130, description: "Tossed with seasonal vegetables and soy sauce. Indo-Chinese style.", veg: true, image: "" },
-          { id: "sf5", name: "Chicken Fried Rice", price: 160, description: "Wok-tossed rice with egg and chicken. Smoky, satisfying.", veg: false, image: "" },
-          { id: "sf9", name: "Veg Manchurian", price: 150, description: "Crispy veggie balls in tangy sauce.", veg: true, image: "" }
+          { id: "sf4", name: "Veg Hakka Noodles", price: 130, description: "Tossed with seasonal vegetables and soy sauce. Indo-Chinese style.", veg: true, image: "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=200&q=80", badge: "" },
+          { id: "sf5", name: "Chicken Fried Rice", price: 160, description: "Wok-tossed rice with egg and chicken. Smoky, satisfying.", veg: false, image: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=200&q=80", badge: "" },
+          { id: "sf9", name: "Veg Manchurian", price: 150, description: "Crispy veggie balls in tangy sauce.", veg: true, image: "https://images.unsplash.com/photo-1569058242567-93de6f36f8eb?w=200&q=80", badge: "" }
         ]
       },
       {
         category: "Breads & Rice",
         items: [
-          { id: "sf6", name: "Butter Naan", price: 35, description: "Soft tandoor naan brushed with butter.", veg: true, image: "" },
-          { id: "sf7", name: "Steamed Rice", price: 60, description: "Perfectly cooked basmati rice.", veg: true, image: "" },
-          { id: "sf10", name: "Jeera Rice", price: 90, description: "Fragrant basmati rice with cumin.", veg: true, image: "" }
+          { id: "sf6", name: "Butter Naan", price: 35, description: "Soft tandoor naan brushed with butter.", veg: true, image: "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=200&q=80", badge: "" },
+          { id: "sf7", name: "Steamed Rice", price: 60, description: "Perfectly cooked basmati rice.", veg: true, image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=200&q=80", badge: "" },
+          { id: "sf10", name: "Jeera Rice", price: 90, description: "Fragrant basmati rice with cumin.", veg: true, image: "https://images.unsplash.com/photo-1596797038530-2c107229654b?w=200&q=80", badge: "" }
         ]
       }
     ]
@@ -110,22 +110,22 @@ const restaurants = [
       {
         category: "Breakfast",
         items: [
-          { id: "sg1", name: "Masala Dosa", price: 80, description: "Crispy rice crepe filled with spiced potato masala. Served with sambar and chutney.", veg: true, image: "", badge: "Bestseller" },
-          { id: "sg2", name: "Idli Sambar (4 pcs)", price: 60, description: "Soft steamed rice cakes with piping hot sambar and coconut chutney.", veg: true, image: "" },
-          { id: "sg3", name: "Medu Vada (2 pcs)", price: 55, description: "Crispy lentil doughnuts. Perfect with chutney.", veg: true, image: "" }
+          { id: "sg1", name: "Masala Dosa", price: 80, description: "Crispy rice crepe filled with spiced potato masala. Served with sambar and chutney.", veg: true, image: "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?w=200&q=80", badge: "Bestseller" },
+          { id: "sg2", name: "Idli Sambar (4 pcs)", price: 60, description: "Soft steamed rice cakes with piping hot sambar and coconut chutney.", veg: true, image: "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=200&q=80", badge: "" },
+          { id: "sg3", name: "Medu Vada (2 pcs)", price: 55, description: "Crispy lentil doughnuts. Perfect with chutney.", veg: true, image: "https://images.unsplash.com/photo-1630383249896-424e482df921?w=200&q=80", badge: "" }
         ]
       },
       {
         category: "Thali",
         items: [
-          { id: "sg4", name: "Full Veg Thali", price: 180, description: "Rice, 2 sabzi, dal, roti, papad, salad, pickle, dessert. Unlimited refills.", veg: true, image: "", badge: "Value" }
+          { id: "sg4", name: "Full Veg Thali", price: 180, description: "Rice, 2 sabzi, dal, roti, papad, salad, pickle, dessert. Unlimited refills.", veg: true, image: "https://images.unsplash.com/photo-1631295868223-63265b40d9c9?w=200&q=80", badge: "Value" }
         ]
       },
       {
         category: "South Indian Mains",
         items: [
-          { id: "sg5", name: "Curd Rice", price: 90, description: "Tempered curd rice with mustard, curry leaves, pomegranate. Cooling and light.", veg: true, image: "" },
-          { id: "sg6", name: "Rasam Rice", price: 100, description: "Tangy peppery rasam with soft rice. Soul food.", veg: true, image: "" }
+          { id: "sg5", name: "Curd Rice", price: 90, description: "Tempered curd rice with mustard, curry leaves, pomegranate. Cooling and light.", veg: true, image: "https://images.unsplash.com/photo-1576673442511-7e39b6545c87?w=200&q=80", badge: "" },
+          { id: "sg6", name: "Rasam Rice", price: 100, description: "Tangy peppery rasam with soft rice. Soul food.", veg: true, image: "https://images.unsplash.com/photo-1630409351217-bc4fa642207b?w=200&q=80", badge: "" }
         ]
       }
     ]
@@ -151,24 +151,24 @@ const restaurants = [
       {
         category: "Starters",
         items: [
-          { id: "rk1", name: "Chicken Tikka", price: 280, description: "Tender chicken pieces marinated in yogurt and spices.", veg: false, image: "", badge: "Bestseller" },
-          { id: "rk2", name: "Paneer Tikka", price: 220, description: "Cubes of paneer grilled to perfection.", veg: true, image: "" },
-          { id: "rk3", name: "Seekh Kebab", price: 250, description: "Minced meat grilled on skewers with spices.", veg: false, image: "" }
+          { id: "rk1", name: "Chicken Tikka", price: 280, description: "Tender chicken pieces marinated in yogurt and spices.", veg: false, image: "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=200&q=80", badge: "Bestseller" },
+          { id: "rk2", name: "Paneer Tikka", price: 220, description: "Cubes of paneer grilled to perfection.", veg: true, image: "https://images.unsplash.com/photo-1626292467676-1a456741129c?w=200&q=80", badge: "" },
+          { id: "rk3", name: "Seekh Kebab", price: 250, description: "Minced meat grilled on skewers with spices.", veg: false, image: "https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=200&q=80", badge: "" }
         ]
       },
       {
         category: "Main Course",
         items: [
-          { id: "rk4", name: "Chicken Biryani", price: 280, description: "Aromatic basmati rice with spiced chicken.", veg: false, image: "", badge: "Must Try" },
-          { id: "rk5", name: "Mutton Rogan Josh", price: 350, description: "Slow-cooked mutton in rich gravy.", veg: false, image: "" },
-          { id: "rk6", name: "Dal Bukhara", price: 180, description: "Black lentils cooked overnight with cream.", veg: true, image: "" }
+          { id: "rk4", name: "Chicken Biryani", price: 280, description: "Aromatic basmati rice with spiced chicken.", veg: false, image: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=200&q=80", badge: "Must Try" },
+          { id: "rk5", name: "Mutton Rogan Josh", price: 350, description: "Slow-cooked mutton in rich gravy.", veg: false, image: "https://images.unsplash.com/photo-1603894584373-5ac82b241413?w=200&q=80", badge: "" },
+          { id: "rk6", name: "Dal Bukhara", price: 180, description: "Black lentils cooked overnight with cream.", veg: true, image: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=200&q=80", badge: "" }
         ]
       },
       {
         category: "Desserts",
         items: [
-          { id: "rk7", name: "Gulab Jamun", price: 80, description: "Deep fried dumplings in sugar syrup.", veg: true, image: "" },
-          { id: "rk8", name: "Kulfi", price: 100, description: "Traditional Indian ice cream.", veg: true, image: "", badge: "Seasonal" }
+          { id: "rk7", name: "Gulab Jamun", price: 80, description: "Deep fried dumplings in sugar syrup.", veg: true, image: "https://images.unsplash.com/photo-1629127719698-2f2e5472f9b5?w=200&q=80", badge: "" },
+          { id: "rk8", name: "Kulfi", price: 100, description: "Traditional Indian ice cream.", veg: true, image: "https://images.unsplash.com/photo-1501443762994-82bd5dace89a?w=200&q=80", badge: "Seasonal" }
         ]
       }
     ]
@@ -194,23 +194,23 @@ const restaurants = [
       {
         category: "Pizzas",
         items: [
-          { id: "pp1", name: "Margherita", price: 299, description: "Classic tomato, mozzarella, and basil.", veg: true, image: "", badge: "Bestseller" },
-          { id: "pp2", name: "Pepperoni", price: 399, description: "Loaded with pepperoni and extra cheese.", veg: false, image: "" },
-          { id: "pp3", name: "Veggie Supreme", price: 349, description: "Loaded with fresh vegetables.", veg: true, image: "" }
+          { id: "pp1", name: "Margherita", price: 299, description: "Classic tomato, mozzarella, and basil.", veg: true, image: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=200&q=80", badge: "Bestseller" },
+          { id: "pp2", name: "Pepperoni", price: 399, description: "Loaded with pepperoni and extra cheese.", veg: false, image: "https://images.unsplash.com/photo-1628840042765-356cda07504e?w=200&q=80", badge: "" },
+          { id: "pp3", name: "Veggie Supreme", price: 349, description: "Loaded with fresh vegetables.", veg: true, image: "https://images.unsplash.com/photo-1594007654729-407eedc4be65?w=200&q=80", badge: "" }
         ]
       },
       {
         category: "Pasta",
         items: [
-          { id: "pp4", name: "Arrabiata Pasta", price: 249, description: "Pasta in spicy tomato sauce.", veg: true, image: "" },
-          { id: "pp5", name: "Chicken Alfredo", price: 329, description: "Creamy pasta with grilled chicken.", veg: false, image: "" }
+          { id: "pp4", name: "Arrabiata Pasta", price: 249, description: "Pasta in spicy tomato sauce.", veg: true, image: "https://images.unsplash.com/photo-1563379926898-05f4575a45d8?w=200&q=80", badge: "" },
+          { id: "pp5", name: "Chicken Alfredo", price: 329, description: "Creamy pasta with grilled chicken.", veg: false, image: "https://images.unsplash.com/photo-1645112411341-6c4fd023714a?w=200&q=80", badge: "" }
         ]
       },
       {
         category: "Beverages",
         items: [
-          { id: "pp6", name: "Lemonade", price: 79, description: "Fresh squeezed lemonade.", veg: true, image: "" },
-          { id: "pp7", name: "Chocolate Shake", price: 149, description: "Rich and thick chocolate shake.", veg: true, image: "" }
+          { id: "pp6", name: "Lemonade", price: 79, description: "Fresh squeezed lemonade.", veg: true, image: "https://images.unsplash.com/photo-1621263764928-df1444c5e859?w=200&q=80", badge: "" },
+          { id: "pp7", name: "Chocolate Shake", price: 149, description: "Rich and thick chocolate shake.", veg: true, image: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=200&q=80", badge: "" }
         ]
       }
     ]
@@ -236,23 +236,23 @@ const restaurants = [
       {
         category: "Sweets",
         items: [
-          { id: "bs1", name: "Gulab Jamun (4 pcs)", price: 60, description: "Soft doughnuts in rose syrup.", veg: true, image: "", badge: "Bestseller" },
-          { id: "bs2", name: "Rasgulla (6 pcs)", price: 70, description: "Soft cottage cheese balls in syrup.", veg: true, image: "" },
-          { id: "bs3", name: "Besan Ladoo", price: 80, description: "Gram flour sweets with nuts.", veg: true, image: "" }
+          { id: "bs1", name: "Gulab Jamun (4 pcs)", price: 60, description: "Soft doughnuts in rose syrup.", veg: true, image: "https://images.unsplash.com/photo-1629127719698-2f2e5472f9b5?w=200&q=80", badge: "Bestseller" },
+          { id: "bs2", name: "Rasgulla (6 pcs)", price: 70, description: "Soft cottage cheese balls in syrup.", veg: true, image: "https://images.unsplash.com/photo-1589119908995-c6837fa14848?w=200&q=80", badge: "" },
+          { id: "bs3", name: "Besan Ladoo", price: 80, description: "Gram flour sweets with nuts.", veg: true, image: "https://images.unsplash.com/photo-1605197130044-1e2d832d3c21?w=200&q=80", badge: "" }
         ]
       },
       {
         category: "Namkeen",
         items: [
-          { id: "bs4", name: "Mix Namkeen", price: 100, description: "Assorted crunchy snacks.", veg: true, image: "" },
-          { id: "bs5", name: "Aloo Bhujia", price: 80, description: "Crispy potato noodles.", veg: true, image: "" }
+          { id: "bs4", name: "Mix Namkeen", price: 100, description: "Assorted crunchy snacks.", veg: true, image: "https://images.unsplash.com/photo-1600408628039-7d6233e8d480?w=200&q=80", badge: "" },
+          { id: "bs5", name: "Aloo Bhujia", price: 80, description: "Crispy potato noodles.", veg: true, image: "https://images.unsplash.com/photo-1603105037880-880cd4edfb0d?w=200&q=80", badge: "" }
         ]
       },
       {
         category: "Fast Food",
         items: [
-          { id: "bs6", name: "Samosa (2 pcs)", price: 40, description: "Crispy pastry with spiced potatoes.", veg: true, image: "" },
-          { id: "bs7", name: "Kachori", price: 35, description: "Puffed dough with lentil filling.", veg: true, image: "" }
+          { id: "bs6", name: "Samosa (2 pcs)", price: 40, description: "Crispy pastry with spiced potatoes.", veg: true, image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=200&q=80", badge: "" },
+          { id: "bs7", name: "Kachori", price: 35, description: "Puffed dough with lentil filling.", veg: true, image: "https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=200&q=80", badge: "" }
         ]
       }
     ]
@@ -278,24 +278,24 @@ const restaurants = [
       {
         category: "Curries",
         items: [
-          { id: "sd1", name: "Dal Fry", price: 80, description: "Yellow dal with tadka.", veg: true, image: "" },
-          { id: "sd2", name: "Paneer Bhuna", price: 140, description: "Dry paneer with onion gravy.", veg: true, image: "" },
-          { id: "sd3", name: "Egg Curry", price: 100, description: "Boiled eggs in tomato gravy.", veg: false, image: "" }
+          { id: "sd1", name: "Dal Fry", price: 80, description: "Yellow dal with tadka.", veg: true, image: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=200&q=80", badge: "" },
+          { id: "sd2", name: "Paneer Bhuna", price: 140, description: "Dry paneer with onion gravy.", veg: true, image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=200&q=80", badge: "" },
+          { id: "sd3", name: "Egg Curry", price: 100, description: "Boiled eggs in tomato gravy.", veg: false, image: "https://images.unsplash.com/photo-1626645738196-c2a72c7d6e4c?w=200&q=80", badge: "" }
         ]
       },
       {
         category: "Breads",
         items: [
-          { id: "sd4", name: "Plain Roti", price: 10, description: "Whole wheat flatbread.", veg: true, image: "" },
-          { id: "sd5", name: "Lachha Paratha", price: 25, description: "Layered flaky paratha.", veg: true, image: "" },
-          { id: "sd6", name: "Butter Roti", price: 15, description: "Roti with butter.", veg: true, image: "" }
+          { id: "sd4", name: "Plain Roti", price: 10, description: "Whole wheat flatbread.", veg: true, image: "https://images.unsplash.com/photo-1583209814737-8ec3e9e37757?w=200&q=80", badge: "" },
+          { id: "sd5", name: "Lachha Paratha", price: 25, description: "Layered flaky paratha.", veg: true, image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=200&q=80", badge: "" },
+          { id: "sd6", name: "Butter Roti", price: 15, description: "Roti with butter.", veg: true, image: "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=200&q=80", badge: "" }
         ]
       },
       {
         category: "Rice",
         items: [
-          { id: "sd7", name: "Plain Rice", price: 40, description: "Steamed basmati rice.", veg: true, image: "" },
-          { id: "sd8", name: "Jeera Rice", price: 70, description: "Rice with cumin tempering.", veg: true, image: "" }
+          { id: "sd7", name: "Plain Rice", price: 40, description: "Steamed basmati rice.", veg: true, image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=200&q=80", badge: "" },
+          { id: "sd8", name: "Jeera Rice", price: 70, description: "Rice with cumin tempering.", veg: true, image: "https://images.unsplash.com/photo-1596797038530-2c107229654b?w=200&q=80", badge: "" }
         ]
       }
     ]
@@ -321,23 +321,23 @@ const restaurants = [
       {
         category: "Mandi",
         items: [
-          { id: "mh1", name: "Chicken Mandi", price: 350, description: "Chicken cooked in aromatic rice and spices.", veg: false, image: "", badge: "Bestseller" },
-          { id: "mh2", name: "Mutton Mandi", price: 450, description: "Tender mutton with flavorful rice.", veg: false, image: "" },
-          { id: "mh3", name: "Fish Mandi", price: 400, description: "Fresh fish cooked in traditional style.", veg: false, image: "" }
+          { id: "mh1", name: "Chicken Mandi", price: 350, description: "Chicken cooked in aromatic rice and spices.", veg: false, image: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=200&q=80", badge: "Bestseller" },
+          { id: "mh2", name: "Mutton Mandi", price: 450, description: "Tender mutton with flavorful rice.", veg: false, image: "https://images.unsplash.com/photo-1569058242567-93de6f36f8eb?w=200&q=80", badge: "" },
+          { id: "mh3", name: "Fish Mandi", price: 400, description: "Fresh fish cooked in traditional style.", veg: false, image: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=200&q=80", badge: "" }
         ]
       },
       {
         category: "Biryani",
         items: [
-          { id: "mh4", name: "Hyderabadi Biryani", price: 320, description: "Famous aromatic rice with chicken.", veg: false, image: "", badge: "Must Try" },
-          { id: "mh5", name: "Veg Biryani", price: 220, description: "Mixed vegetables in aromatic rice.", veg: true, image: "" }
+          { id: "mh4", name: "Hyderabadi Biryani", price: 320, description: "Famous aromatic rice with chicken.", veg: false, image: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=200&q=80", badge: "Must Try" },
+          { id: "mh5", name: "Veg Biryani", price: 220, description: "Mixed vegetables in aromatic rice.", veg: true, image: "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=200&q=80", badge: "" }
         ]
       },
       {
         category: "Curries",
         items: [
-          { id: "mh6", name: "Chicken Salan", price: 200, description: "Chicken in peanut-based gravy.", veg: false, image: "" },
-          { id: "mh7", name: "Dum Ka Chicken", price: 250, description: "Slow-cooked chicken in spices.", veg: false, image: "" }
+          { id: "mh6", name: "Chicken Salan", price: 200, description: "Chicken in peanut-based gravy.", veg: false, image: "https://images.unsplash.com/photo-1603894584373-5ac82b241413?w=200&q=80", badge: "" },
+          { id: "mh7", name: "Dum Ka Chicken", price: 250, description: "Slow-cooked chicken in spices.", veg: false, image: "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=200&q=80", badge: "" }
         ]
       }
     ]
