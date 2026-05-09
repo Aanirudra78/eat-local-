@@ -2,7 +2,7 @@
 let activeFilter = 'all';
 let searchQuery = '';
 
-// DOM Elements
+// DOM Elements — safely queried (some only exist on certain pages)
 const navbar = document.getElementById('navbar');
 const searchInput = document.getElementById('searchInput');
 const searchBtn = document.getElementById('searchBtn');
@@ -15,6 +15,7 @@ const heroBg = document.getElementById('heroBg');
 // Navbar scroll effect
 window.addEventListener('scroll', () => {
   const navbar = document.getElementById('navbar');
+  if (!navbar) return;
   if (window.scrollY > 80) {
     navbar.classList.add('scrolled');
   } else {
@@ -119,28 +120,35 @@ function filterAndRender() {
 }
 
 // Search input listener
-searchInput.addEventListener('input', (e) => {
-  searchQuery = e.target.value;
-  filterAndRender();
-});
+if (searchInput) {
+  searchInput.addEventListener('input', (e) => {
+    searchQuery = e.target.value;
+    filterAndRender();
+  });
+}
 
-searchBtn.addEventListener('click', () => {
-  searchQuery = searchInput.value;
-  filterAndRender();
-});
+if (searchBtn) {
+  searchBtn.addEventListener('click', () => {
+    searchQuery = searchInput.value;
+    filterAndRender();
+  });
+}
 
 // Filter pill listeners
-filterBar.addEventListener('click', (e) => {
-  if (e.target.classList.contains('filter-pill')) {
-    document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
-    e.target.classList.add('active');
-    activeFilter = e.target.dataset.filter;
-    filterAndRender();
-  }
-});
+if (filterBar) {
+  filterBar.addEventListener('click', (e) => {
+    if (e.target.classList.contains('filter-pill')) {
+      document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+      e.target.classList.add('active');
+      activeFilter = e.target.dataset.filter;
+      filterAndRender();
+    }
+  });
+}
 
 // Set hero background from a random restaurant
 function setHeroBackground() {
+  if (!heroBg) return;
   const openRestaurants = restaurants.filter(r => r.isOpen && r.heroImage);
   if (openRestaurants.length > 0) {
     const randomRestaurant = openRestaurants[Math.floor(Math.random() * openRestaurants.length)];

@@ -72,6 +72,44 @@ function initRestaurant() {
   renderMenu();
   setupWhatsAppLink();
   renderCart();
+
+  const callBtn = document.getElementById('callBtn');
+  if (callBtn) {
+    callBtn.style.cursor = 'pointer';
+    callBtn.addEventListener('click', () => {
+      const localPhone = currentRestaurant.phone.length === 12
+        ? currentRestaurant.phone.slice(2)
+        : currentRestaurant.phone;
+      window.location.href = `tel:${localPhone}`;
+    });
+  }
+
+  const favoriteBtn = document.getElementById('favoriteBtn');
+  if (favoriteBtn) {
+    favoriteBtn.addEventListener('click', () => {
+      favoriteBtn.classList.toggle('active');
+    });
+  }
+
+  const shareBtn = document.getElementById('shareBtn');
+  if (shareBtn) {
+    shareBtn.addEventListener('click', async () => {
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: currentRestaurant.name,
+            text: `Check out ${currentRestaurant.name} - ${currentRestaurant.tagline}`,
+            url: window.location.href
+          });
+        } catch (err) {
+          console.log('Share cancelled');
+        }
+      } else {
+        navigator.clipboard.writeText(window.location.href);
+        alert('Link copied to clipboard!');
+      }
+    });
+  }
 }
 
 // Navbar scroll effect
@@ -182,6 +220,7 @@ function findMenuItem(itemId) {
 
 // Render menu items
 function renderMenu() {
+  menuSection.innerHTML = '';
   // Render popular items section
   const allItems = currentRestaurant.menu.flatMap(c => c.items);
   const popularItems = allItems.filter(item => item.badge === 'Bestseller' || item.badge === 'Must Try');
@@ -222,7 +261,7 @@ function renderMenu() {
             </div>
             <p class="menu-item-description">${item.description}</p>
             <div class="menu-item-footer">
-              <span class="menu-item-price">${item.price}</span>
+              <span class="menu-item-price">₹${item.price}</span>
               ${buttonHtml}
             </div>
           </div>
@@ -380,44 +419,6 @@ function renderCart() {
 
 function setupWhatsAppLink() {
   whatsappFloat.href = `https://wa.me/${currentRestaurant.phone}`;
-}
-
-// Setup call button
-const callBtn = document.getElementById('callBtn');
-if (callBtn) {
-  callBtn.style.cursor = 'pointer';
-  callBtn.addEventListener('click', () => {
-    window.location.href = `tel:${currentRestaurant.phone}`;
-  });
-}
-
-// Setup favorite button
-const favoriteBtn = document.getElementById('favoriteBtn');
-if (favoriteBtn) {
-  favoriteBtn.addEventListener('click', () => {
-    favoriteBtn.classList.toggle('active');
-  });
-}
-
-// Setup share button
-const shareBtn = document.getElementById('shareBtn');
-if (shareBtn) {
-  shareBtn.addEventListener('click', async () => {
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: currentRestaurant.name,
-          text: `Check out ${currentRestaurant.name} - ${currentRestaurant.tagline}`,
-          url: window.location.href
-        });
-      } catch (err) {
-        console.log('Share cancelled');
-      }
-    } else {
-      navigator.clipboard.writeText(window.location.href);
-      alert('Link copied to clipboard!');
-    }
-  });
 }
 
 // Modal functions
