@@ -210,6 +210,8 @@ function renderMenu() {
         buttonHtml = `<button class="add-btn" onclick="addToCart('${item.id}')"><span>Add</span><span>→</span></button>`;
       }
       
+      buttonHtml = `<div data-item-id="${item.id}">${buttonHtml}</div>`;
+      
       itemsHtml += `
         <div class="menu-item">
           <div class="menu-item-info">
@@ -282,6 +284,8 @@ function renderMenu() {
         buttonHtml = `<button class="add-btn" onclick="addToCart('${item.id}')"><span>Add</span><span>→</span></button>`;
       }
       
+      buttonHtml = `<div data-item-id="${item.id}">${buttonHtml}</div>`;
+      
       itemEl.innerHTML = `
         <div class="menu-item-info">
           <div class="menu-item-header">
@@ -313,11 +317,12 @@ window.addToCart = function(itemId) {
   if (cart[itemId]) {
     cart[itemId].qty += 1;
   } else {
-    cart[itemId] = { name: item.name, price: item.price, qty: 1 };
+    cart[itemId] = { id: itemId, name: item.name, price: item.price, qty: 1 };
   }
   
   renderCart();
-  renderMenu();
+  // Update just this item's button
+  updateItemButton(itemId);
 };
 
 window.updateQuantity = function(itemId, delta) {
@@ -328,8 +333,30 @@ window.updateQuantity = function(itemId, delta) {
     delete cart[itemId];
   }
   renderCart();
-  renderMenu();
+  // Update just this item's button
+  updateItemButton(itemId);
 };
+
+function updateItemButton(itemId) {
+  const item = findMenuItem(itemId);
+  if (!item) return;
+  
+  const qty = cart[itemId] ? cart[itemId].qty : 0;
+  const buttonContainer = document.querySelector(`[data-item-id="${itemId}"]`);
+  if (!buttonContainer) return;
+  
+  if (qty > 0) {
+    buttonContainer.innerHTML = `
+      <div class="quantity-control">
+        <button class="qty-btn" onclick="updateQuantity('${itemId}', -1)">−</button>
+        <span class="qty-count">${qty}</span>
+        <button class="qty-btn" onclick="updateQuantity('${itemId}', 1)">+</button>
+      </div>
+    `;
+  } else {
+    buttonContainer.innerHTML = `<button class="add-btn" onclick="addToCart('${itemId}')"><span>Add</span><span>→</span></button>`;
+  }
+}
 
 function renderCart() {
   const items = Object.values(cart);
