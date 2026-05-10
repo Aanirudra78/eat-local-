@@ -1,3 +1,40 @@
+// data.js - Shared Logic for Eat Local
+
+const CONFIG = {
+    BASE_DISTANCE: 4.0, // 4 km tak fix
+    BASE_PRICE: 50.0,   // ₹50 fix
+    EXTRA_KM_RATE: 10.0 // ₹10 per extra km
+};
+
+/**
+ * Haversine Formula: Do coordinates ke beech ki seedhi distance (KM mein)
+ */
+function calculateDistance(lat1, lon1, lat2, lon2) {
+    const R = 6371; // Earth radius in km
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
+}
+
+/**
+ * Pricing Logic: Distance ke hisaab se delivery charge
+ */
+function calculateDeliveryCharge(distance) {
+    if (distance <= CONFIG.BASE_DISTANCE) {
+        return CONFIG.BASE_PRICE;
+    } else {
+        const extraDistance = distance - CONFIG.BASE_DISTANCE;
+        return CONFIG.BASE_PRICE + (Math.ceil(extraDistance) * CONFIG.EXTRA_KM_RATE);
+    }
+}
+
+// Global Export (Browser friendly)
+window.EatLocalLogic = { calculateDistance, calculateDeliveryCharge, CONFIG };
+
 const restaurants = [
   {
     id: "urban-brew-cafe",
